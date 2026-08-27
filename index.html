@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ランダム音声再生</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f7f7f7;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    }
+
+    .container {
+      width: min(90%, 420px);
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 32px;
+      font-size: 1.5rem;
+      color: #222;
+    }
+
+    #playButton {
+      width: 100%;
+      min-height: 160px;
+      border: none;
+      border-radius: 24px;
+      background: #1976d2;
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      transition: transform 0.08s ease, opacity 0.08s ease;
+      touch-action: manipulation;
+    }
+
+    #playButton:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+
+    #playButton:disabled {
+      opacity: 0.55;
+      cursor: default;
+    }
+
+    #status {
+      min-height: 1.5em;
+      margin-top: 24px;
+      color: #555;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+    <h1>音を聞いて、動いてください</h1>
+
+    <button id="playButton" type="button">
+      ▶ 音を聞く
+    </button>
+
+    <p id="status" aria-live="polite"></p>
+  </main>
+
+  <audio id="audioPlayer" preload="auto"></audio>
+
+  <script>
+    /*
+      ↓↓↓ ここに音声ファイル名を追加してください ↓↓↓
+
+      HTMLと同じフォルダに音声を置く場合：
+      "audio1.mp3"
+
+      audio というフォルダに入れる場合：
+      "audio/audio1.mp3"
+    */
+
+    const audioFiles = [
+      "audio/audio1.mp3",
+      "audio/audio2.mp3",
+      "audio/audio3.mp3",
+      "audio/audio4.mp3",
+      "audio/audio5.mp3"
+    ];
+
+    const playButton = document.getElementById("playButton");
+    const audioPlayer = document.getElementById("audioPlayer");
+    const status = document.getElementById("status");
+
+    let previousIndex = -1;
+
+    function getRandomIndex() {
+      if (audioFiles.length === 1) {
+        return 0;
+      }
+
+      let index;
+
+      // 直前と同じ音声が連続しないようにする
+      do {
+        index = Math.floor(Math.random() * audioFiles.length);
+      } while (index === previousIndex);
+
+      return index;
+    }
+
+    playButton.addEventListener("click", async () => {
+      if (audioFiles.length === 0) {
+        status.textContent = "音声が登録されていません。";
+        return;
+      }
+
+      const index = getRandomIndex();
+      previousIndex = index;
+
+      audioPlayer.pause();
+      audioPlayer.currentTime = 0;
+      audioPlayer.src = audioFiles[index];
+
+      playButton.disabled = true;
+      status.textContent = "再生中…";
+
+      try {
+        await audioPlayer.play();
+      } catch (error) {
+        console.error(error);
+        status.textContent = "音声を再生できませんでした。";
+        playButton.disabled = false;
+      }
+    });
+
+    audioPlayer.addEventListener("ended", () => {
+      playButton.disabled = false;
+      status.textContent = "もう一度押してください";
+    });
+
+    audioPlayer.addEventListener("error", () => {
+      playButton.disabled = false;
+      status.textContent = "音声ファイルが見つかりません。";
+    });
+  </script>
+
+</body>
+</html>

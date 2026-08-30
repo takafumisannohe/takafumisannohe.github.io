@@ -39,7 +39,7 @@
       border-radius: 24px;
       background: #1976d2;
       color: white;
-      font-size: 2rem;
+      font-size: 5rem;
       font-weight: bold;
       cursor: pointer;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
@@ -96,9 +96,9 @@
   <main class="container">
     <h1>　</h1>
 
-    <button id="playButton" type="button">
-      ▶ 
-    </button>
+　　<button id="playButton" type="button" aria-label="音声を再生">
+    ▶
+　　</button>
 
     <button id="replayButton" type="button" disabled>
       🔁 もういちど
@@ -207,7 +207,7 @@
       if (currentAudioFile) {
         replayButton.disabled = false;
       }
-      status.textContent = "もういちど　おしてください";
+      status.textContent = "▶を　おしてください";
     });
 
     audioPlayer.addEventListener("error", () => {

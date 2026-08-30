@@ -94,17 +94,17 @@
 <body>
 
   <main class="container">
-    <h1>音を聞いて、動いてください</h1>
+    <h1>　</h1>
 
     <button id="playButton" type="button">
-      ▶ 音を聞く
+      ▶ 
     </button>
 
     <button id="replayButton" type="button" disabled>
-      🔁 もう一度再生
+      🔁 もういちど
     </button>
 
-    <p id="status" aria-live="polite">ボタンを押してください</p>
+    <p id="status" aria-live="polite">ボタンを　おしてください</p>
   </main>
 
   <audio id="audioPlayer" preload="auto"></audio>
@@ -207,7 +207,7 @@
       if (currentAudioFile) {
         replayButton.disabled = false;
       }
-      status.textContent = "もう一度押してください";
+      status.textContent = "もういちど　おしてください";
     });
 
     audioPlayer.addEventListener("error", () => {

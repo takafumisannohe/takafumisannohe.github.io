@@ -25,65 +25,51 @@
       align-items: center;
       justify-content: space-between;
 
-      max-width: 600px;
+      max-width: 700px;
       margin: 0 auto 20px auto;
       padding: 20px;
 
       background-color: white;
       border-radius: 16px;
 
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
 
     .illustration {
-      width: 45%;
-      max-width: 220px;
+      width: 40%;
+      max-width: 240px;
       height: auto;
       object-fit: contain;
     }
 
-    .play-area {
-      width: 45%;
+    .audio-area {
+      width: 50%;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    .play-button {
-      width: 100px;
-      height: 100px;
-
-      border: none;
-      border-radius: 50%;
-
-      background-color: #333;
-      color: white;
-
-      font-size: 3rem;
-
-      cursor: pointer;
+    .audio-player {
+      width: 100%;
+      max-width: 320px;
     }
 
-    .play-button:active {
-      transform: scale(0.95);
-    }
-
-    @media (max-width: 500px) {
-
+    @media (max-width: 600px) {
       body {
         padding: 12px;
       }
 
       .practice-card {
-        padding: 16px;
+        padding: 14px;
       }
 
-      .play-button {
-        width: 85px;
-        height: 85px;
-        font-size: 2.5rem;
+      .illustration {
+        width: 38%;
       }
 
+      .audio-area {
+        width: 56%;
+      }
     }
   </style>
 </head>
@@ -91,7 +77,6 @@
 <body>
 
   <h1>会話練習</h1>
-
 
   <!-- 場面1 -->
   <div class="practice-card">
@@ -102,13 +87,11 @@
       class="illustration"
     >
 
-    <div class="play-area">
-      <button
-        class="play-button"
-        onclick="playAudio('audio/scene1.mp3')"
-      >
-        ▶
-      </button>
+    <div class="audio-area">
+      <audio controls class="audio-player">
+        <source src="audio/scene1.mp3" type="audio/mpeg">
+        このブラウザでは音声を再生できません。
+      </audio>
     </div>
 
   </div>
@@ -123,13 +106,11 @@
       class="illustration"
     >
 
-    <div class="play-area">
-      <button
-        class="play-button"
-        onclick="playAudio('audio/scene2.mp3')"
-      >
-        ▶
-      </button>
+    <div class="audio-area">
+      <audio controls class="audio-player">
+        <source src="audio/scene2.mp3" type="audio/mpeg">
+        このブラウザでは音声を再生できません。
+      </audio>
     </div>
 
   </div>
@@ -144,13 +125,11 @@
       class="illustration"
     >
 
-    <div class="play-area">
-      <button
-        class="play-button"
-        onclick="playAudio('audio/scene3.mp3')"
-      >
-        ▶
-      </button>
+    <div class="audio-area">
+      <audio controls class="audio-player">
+        <source src="audio/scene3.mp3" type="audio/mpeg">
+        このブラウザでは音声を再生できません。
+      </audio>
     </div>
 
   </div>
@@ -165,38 +144,31 @@
       class="illustration"
     >
 
-    <div class="play-area">
-      <button
-        class="play-button"
-        onclick="playAudio('audio/scene4.mp3')"
-      >
-        ▶
-      </button>
+    <div class="audio-area">
+      <audio controls class="audio-player">
+        <source src="audio/scene4.mp3" type="audio/mpeg">
+        このブラウザでは音声を再生できません。
+      </audio>
     </div>
 
   </div>
 
 
   <script>
+    const audioPlayers = document.querySelectorAll('audio');
 
-    let currentAudio = null;
+    audioPlayers.forEach(player => {
+      player.addEventListener('play', () => {
 
-    function playAudio(file) {
+        audioPlayers.forEach(otherPlayer => {
+          if (otherPlayer !== player) {
+            otherPlayer.pause();
+            otherPlayer.currentTime = 0;
+          }
+        });
 
-      // ほかの音声が再生中なら停止
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-      }
-
-      // 新しい音声を作成
-      currentAudio = new Audio(file);
-
-      // 再生
-      currentAudio.play();
-
-    }
-
+      });
+    });
   </script>
 
 </body>

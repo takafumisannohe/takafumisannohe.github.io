@@ -54,21 +54,39 @@
       max-width: 320px;
     }
 
+    /* スマホ表示 */
     @media (max-width: 600px) {
+
       body {
         padding: 12px;
       }
 
+      h1 {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+      }
+
       .practice-card {
-        padding: 14px;
+        flex-direction: column;
+        justify-content: center;
+        gap: 18px;
+
+        padding: 18px;
+        margin-bottom: 18px;
       }
 
       .illustration {
-        width: 38%;
+        width: 80%;
+        max-width: 280px;
       }
 
       .audio-area {
-        width: 56%;
+        width: 100%;
+      }
+
+      .audio-player {
+        width: 100%;
+        max-width: none;
       }
     }
   </style>
